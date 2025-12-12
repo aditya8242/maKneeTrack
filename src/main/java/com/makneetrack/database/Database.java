@@ -4,8 +4,16 @@ import java.sql.*;
 
 public class Database
 {
-	public Connection connection;
-	public Statement statement;
+	private Connection connection;
+	private Statement statement;
+	
+	public Connection getConnection() {
+		return connection;
+	}
+
+	public Statement getStatement() {
+		return statement;
+	}
 
 	public void CreateDB()
 	{
@@ -30,5 +38,24 @@ public class Database
 		{
 			System.out.println(exception);
 		}
+	}
+
+	public void closeDB()
+	{
+		try 
+        {
+            if (statement != null)
+			{
+                statement.close();
+            }
+            if (connection != null) 
+			{
+                connection.close();
+            }
+        } 
+        catch (SQLException exception)
+        {
+            System.out.println(exception);
+        }
 	}
 }

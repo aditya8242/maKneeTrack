@@ -21,7 +21,7 @@ public class Services
 		try
 		{
 			PreparedStatement ps;
-			ps = dobj.connection.prepareStatement("insert into expenses (datetime, category, amount) values (?, ?, ?)");
+			ps = dobj.getConnection().prepareStatement("insert into expenses (datetime, category, amount) values (?, ?, ?)");
 			ps.setString(1, dt);
 			ps.setString(2, category);
 			ps.setInt(3, amount);
@@ -38,11 +38,13 @@ public class Services
 	{
 		try
 		{
-			ResultSet rs = dobj.statement.executeQuery("select * from expenses");	
+			ResultSet rs = dobj.getStatement().executeQuery("select * from expenses");	
 
 			while(rs.next())
 			{
-				System.out.printf("ID: %d\tTime/Date: %s\tCategory: %s\tAmount: %d\n",rs.getInt("id"), rs.getString("datetime"), rs.getString("category"), rs.getInt("amount"));
+				System.out.printf("ID: %-5d\tTime/Date: %-10s\tCategory: %-10s\tAmount: %-10d\n",rs.getInt("id"), rs.getString("datetime"), rs.getString("category"), rs.getInt("amount"));
+				// %-5d %-20s %-15s %-10d%n
+				// initial width
 			}
 		}
 		catch(SQLException exception)
@@ -56,7 +58,7 @@ public class Services
 		try 
 		{
 			PreparedStatement ps;
-			ps = dobj.connection.prepareStatement("delete from expenses where id = ?");
+			ps = dobj.getConnection().prepareStatement("delete from expenses where id = ?");
 			ps.setInt(1, id);
 			ps.executeUpdate();
 		} 
@@ -70,7 +72,7 @@ public class Services
 	{
 		try
 		{
-			ResultSet rs = dobj.statement.executeQuery("select count(*) from expenses");
+			ResultSet rs = dobj.getStatement().executeQuery("select count(*) from expenses");
 
 			if(rs.next())
 			{
@@ -83,5 +85,10 @@ public class Services
 			System.out.println(exception);
 		}
 		return false;
+	}
+
+	public void closeDatabase()
+	{
+		dobj.closeDB();
 	}
 }
