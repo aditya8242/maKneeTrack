@@ -80,5 +80,5 @@ GPL 3
 
 Aditya Chavan
 
-* **Note: The code has two branches, Vanilla and main. (Vanilla contains project without use of Maven)
+* Note: The code has two branches, main and Maven. (main contains project without use of Maven)
 
